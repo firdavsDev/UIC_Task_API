@@ -7,6 +7,12 @@ from django.db import router
 #viewsets
 from rest_framework.routers import SimpleRouter
 
+#JWT
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 from .views import HomiyDetail, Homiylist, TalabaDetail, TalabaList,HomiyViewset,TalabaViewset
 router = SimpleRouter()
 router.register("Homiylar",HomiyViewset,basename='homiylar')
@@ -38,6 +44,11 @@ urlpatterns = [
     path('homiy/<int:pk>/',HomiyDetail.as_view(),name='homiy_id'),
     #login register ...
     path('api-auth/', include('rest_framework.urls')),
+    
+    #JWT
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
     #user
     path('talaba/',TalabaList.as_view(),name='talaba'),
     path('talaba/<int:pk>/',TalabaDetail.as_view(),name='talaba_id'),
